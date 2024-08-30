@@ -1,0 +1,20 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+    - '-c'
+    - |
+      gcloud compute ssh mahendar_guda@cloudshellonubuntu \
+      --zone=us-central1-a \
+      --project=dingoo-backups \
+      --command='sudo su -c "cd /home/mahendar_guda/terraform && ./destroy.sh"'
+  id: 'ssh-to-vm'
+
+timeout: '600s'
+
+serviceAccount: 'cicdpipelinefortestservers@dingoo-backups.iam.gserviceaccount.com'
+
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+
+logsBucket: 'gs://manavbvbucket'
